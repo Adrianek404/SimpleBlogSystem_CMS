@@ -21,10 +21,20 @@
     </div>
 </nav>
 <main>
-
+    <h1>POSTY:</h1>
+    <div class="post-container">
+        <div class="post-box">
+            <h2>Tytuł posta</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet justo nec lacus...</p>
+            <a href="post.php?id=1">Czytaj więcej</a>
+        </div>
+    </div>
+    <div>
+        paginator
+    </div>
 </main>
 <footer>
-
+<p>&copy; 2025 Adrian Rzeszutek</p>
 </footer>
 </body>
 </html>

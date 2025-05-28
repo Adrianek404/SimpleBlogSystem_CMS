@@ -1,8 +1,12 @@
 *{
-    background-color: #f4f4f4;
     font-family: 'Arial', 'Open Sans', sans-serif;
     box-sizing: border-box;
     margin: 0;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 nav{
     display: flex;
@@ -11,7 +15,9 @@ nav{
     flex-direction: column;
     width: 100%;
     padding-bottom: 8px;
-    border-bottom: 1px solid #010
+    border-bottom: 1px solid #010;
+    background-color: #0a1e2f;
+    z-index: 999;
 }
 .logo {
     display: flex;
@@ -20,6 +26,7 @@ nav{
     width: 100%;
     padding: 10px 20px;
     box-sizing: border-box;
+    color: white;
 }
 .login-button{
     color: white;
@@ -33,4 +40,56 @@ nav{
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+    color: white;
+}
+main{
+    background-color: #f4f4f4;
+    flex: 1;
+    h1{
+        padding-top: 20px;
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+a{
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+.post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.post-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    h2 {
+        margin-top: 0;
+        font-size: 20px;
+    }
+
+    p {
+        margin: 10px 0;
+        color: #555;
+    }
+}
+footer{
+    position: sticky;
+    bottom: 0;
+    background-color: #0a1e2f;
+    padding: 20px;
+    font-size: 14px;
+    p {
+        color: #ffffff;
+        text-align: center;
+    }
 }
