@@ -106,6 +106,7 @@ footer{
         float: left;
         padding: 8px 16px;
         text-decoration: none;
+        margin: 0 5px;
 
         &.active {
             background-color: #007BFF;

@@ -1,7 +1,28 @@
 <?php
 
-include ("./inc/db.php");
+global $conn;
+include("./inc/db.php");
 
+//setcookie("STRONA", "1", time() + (86400 * 30), "/");
+
+$maxOnPage = 1;
+$sql = "SELECT COUNT(id) FROM posts;";
+$result = mysqli_query($conn, $sql);
+$count = mysqli_fetch_array($result);
+$numberResult = $count[0];
+$numberPages = ceil($numberResult / $maxOnPage);
+
+if (isset($_GET['page'])) {
+    if ($_GET['page'] < 1 || $_GET['page'] > $numberPages) {
+        $page = 1;
+    } else {
+        $page = $_GET['page'];
+    }
+    setcookie("STRONA", $page, time() + (86400 * 30), "/");
+} else {
+    $page = 1;
+}
+$from = $maxOnPage * ($page - 1);
 
 ?>
 <!doctype html>
@@ -29,18 +50,19 @@ include ("./inc/db.php");
     <h1>POSTY:</h1>
     <div class="post-container">
         <?php
-        $sql = "SELECT id, title, content FROM posts;";
+        $sql = "SELECT id, title, content FROM posts LIMIT $maxOnPage OFFSET $from;";
         if ($stmt = mysqli_prepare($conn, $sql)) {
             if (mysqli_stmt_execute($stmt)) {
                 $result = mysqli_stmt_get_result($stmt);
                 if (mysqli_num_rows($result) > 0) {
-                    while($row = mysqli_fetch_assoc($result)) {
+                    while ($row = mysqli_fetch_assoc($result)) {
                         ?>
+
                         <div class="post-box">
                             <?php
-                            echo "<h2>". $row["title"] ."</h2>
-                            <p>". $row["content"] ."</p>
-                            <a href='post.php?id=". $row["id"] ."'>Czytaj więcej</a>";
+                            echo "<h2>" . $row["title"] . "</h2>
+                            <p>" . $row["content"] . "</p>
+                            <a href='post.php?id=" . $row["id"] . "'>Czytaj więcej</a>";
                             ?>
                         </div>
                         <?php
@@ -50,21 +72,43 @@ include ("./inc/db.php");
         }
         ?>
     </div>
-<!--  TODO: bez przechodzenia na kolejną strone/ plik zmiana postow, dla testow limit na 2 posty,   -->
     <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a class="active" href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
+        <?php
+        if ($numberResult > 2) {
+            $next = $page + 1;
+            $prevous = $page - 1;
+
+            if ($prevous > 0) {
+                echo "<a href='index.php?page=$prevous'>&laquo;</a>";
+            }
+            for ($i = 1; $i <= $numberPages; $i++) {
+                if ($page == $i) {
+                    echo "<a class='active' href='index.php?page=$i'>$i</a>";
+                } else {
+                    echo "<a href='index.php?page=$i'>$i</a>";
+                }
+                /* TODO: stworzyć system przewijania paginatora: limit na strone 10, wiec np na stronie 14 wezmie srodek 14 i wezmie 4 dodatkowe liczby na lewo i 5 liczb na prawo aby bylo 10
+                    np:
+                    << 2 3 4 5 6 7 8 9 10 11 >>
+                    <<10 11 12 13 14 15 16 17 18 19 >>
+                w liczbach od 1 do 5 active podaza za strona a powyzej 5 zostaje na srodku i liczby sie zmieniaja na koncu o jedno mniej a drugim o jedno wiecej
+                  */
+                if ($i == 10){
+                    $i = $numberPages;
+                }
+            }
+            ?>
+            <?php
+            if ($next <= $numberPages) {
+                echo "<a href='index.php?page=$next'>&raquo;</a>";
+            }
+        }
+        ?>
     </div>
 </main>
 <footer>
-<p>&copy; 2025 Adrian Rzeszutek</p>
+    <p>&copy; 2025 Adrian Rzeszutek</p>
 </footer>
 </body>
 <script src="./js/index.js"></script>
-</html>
+
