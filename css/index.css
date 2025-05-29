@@ -45,6 +45,7 @@ nav{
 main{
     background-color: #f4f4f4;
     flex: 1;
+    padding: 0 20px;
     h1{
         padding-top: 20px;
         color: #333;
@@ -83,7 +84,7 @@ a{
     }
 }
 footer{
-    position: sticky;
+    position: relative;
     bottom: 0;
     background-color: #0a1e2f;
     padding: 20px;
@@ -91,5 +92,30 @@ footer{
     p {
         color: #ffffff;
         text-align: center;
+    }
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+
+        &.active {
+            background-color: #007BFF;
+            border-radius: 8px;
+            color: white;
+        }
+
+        &:hover:not(.active) {
+            background-color: #ddd;
+            border-radius: 8px;
+        }
     }
 }

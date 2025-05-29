@@ -27,10 +27,25 @@
             <h2>Tytuł posta</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet justo nec lacus...</p>
             <a href="post.php?id=1">Czytaj więcej</a>
+        </div><div class="post-box">
+            <h2>Tytuł posta</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet justo nec lacus...</p>
+            <a href="post.php?id=1">Czytaj więcej</a>
+        </div><div class="post-box">
+            <h2>Tytuł posta</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet justo nec lacus...</p>
+            <a href="post.php?id=1">Czytaj więcej</a>
         </div>
     </div>
-    <div>
-        paginator
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a class="active" href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
     </div>
 </main>
 <footer>
