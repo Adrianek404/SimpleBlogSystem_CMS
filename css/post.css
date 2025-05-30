@@ -1,7 +1,8 @@
 .post-box {
 
     p {
-        color: #000; !important;
+        color: #000;
+    !important;
     }
 
     span {
@@ -23,7 +24,8 @@
         }
     }
 }
-.comments-container{
+
+.comments-container {
     max-width: 800px;
     margin: 0 auto;
     display: flex;
@@ -34,21 +36,35 @@
         color: #313030;
     }
 
-    .comment-box{
+    .comment-box {
         display: flex;
         flex-direction: column;
         background-color: #fff;
         border: 1px solid #ccc;
         padding: 20px;
         margin-bottom: 30px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
         .author {
             max-width: 25%;
             margin: 10px 0;
+            border-radius: 5px;
         }
 
         .comment {
+            display: block;
             max-width: 75%;
+            overflow: hidden;
+            resize: both;
+            min-height: 40px;
+            line-height: 20px;
+            border: 1px solid #111;
+            border-radius: 5px;
+        }
+
+        .comment[contenteditable]:empty::before {
+            content: "Wpisz tutaj treść komentarza";
+            color: gray;
         }
 
         button {
@@ -60,7 +76,18 @@
             padding: 6px 12px;
             margin: 10px 0;
             width: 20%;
-            
+
+        }
+
+        .error {
+            color: #FF0000;
+        }
+
+        .public {
+            float: right;
+            color: #555;
         }
     }
+
+
 }

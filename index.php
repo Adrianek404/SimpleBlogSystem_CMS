@@ -5,7 +5,7 @@ include("./inc/db.php");
 
 //setcookie("STRONA", "1", time() + (86400 * 30), "/");
 
-$maxOnPage = 1;
+$maxOnPage = 2;
 $sql = "SELECT COUNT(id) FROM posts;";
 $result = mysqli_query($conn, $sql);
 $count = mysqli_fetch_array($result);

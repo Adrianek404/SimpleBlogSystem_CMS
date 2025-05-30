@@ -3,7 +3,7 @@
 global $conn;
 include("./inc/db.php");
 
-if (isset($_GET["id"]) || is_numeric($_GET["id"])) {
+if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     $Postid = $_GET['id'];
     $sql = "SELECT title, content, created_at FROM posts WHERE id = " . $Postid;
     if ($stmt = mysqli_prepare($conn, $sql)) {
@@ -15,11 +15,24 @@ if (isset($_GET["id"]) || is_numeric($_GET["id"])) {
                     $content = $row["content"];
                     $created_at = $row["created_at"];
                 }
+            }  else {
+                header('Location: index.php');
             }
         }
     }
+} else {
+    header('Location: index.php');
 }
-//if (isset($_POST['']))
+$authorErr = $commentErr = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["author"])) {
+        $authorErr = "Wpisz pseudonim";
+    }
+    if (empty($_POST['comment'])) {
+        $commentErr = "Nie wpisałeś żadnego komentarza";
+    }
+    //TODO: insert
+}
 
 ?>
 <!doctype html>
@@ -28,7 +41,7 @@ if (isset($_GET["id"]) || is_numeric($_GET["id"])) {
     <meta name="author" content="Adrian Rzeszutek">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Simple Blog System (CMS) | </title>
+    <title>Simple Blog System (CMS) | <?php echo $title; ?></title>
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/post.css">
 </head>
@@ -49,25 +62,51 @@ if (isset($_GET["id"]) || is_numeric($_GET["id"])) {
     echo '<h1>Czytasz aktualnie: ' . $title . '</h1>';
     echo '<div class="post-container">';
     echo '<div class="post-box">';
+    echo '<h2>' . $title . '</h2>';
     echo '<p>' . $content . '</p>';
     echo '<button><a href="index.php">Powrót</a></button>';
-    echo '<span>' . $created_at . '</span>';
+    echo '<span> Opublikowano: ' . $created_at . '</span>';
     ?>
     </div></div>
     <h1>Sekcja komentarzy:</h1>
     <div class="comments-container">
-        <form action="<?php echo htmlspecialchars('post.php'); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) .'?id=' . $Postid; ?>" method="post">
             <div class="comment-box">
                 <h4>Skomentuj</h4>
-                <input class="author" name="author" maxlength="100" type="text" placeholder="Wpisz pseudonim">
-                <input class="comment" name="comment" type="text" placeholder="Twój komentarz">
+                <div class="author"><input name="author" maxlength="100" type="text" placeholder="Wpisz pseudonim"><span class="error"><?php echo $authorErr;?></span></div>
+                <div><span class="comment" role="textbox" contenteditable oninput="syncContent()"></span><span class="error"><?php echo $commentErr;?></span></div>
+                <input type="hidden" name="comment" id="commentHidden">
                 <button type="submit">Dodaj</button>
             </div>
         </form>
+    </div>
+    <div class="comments-container">
+        <?php
+        $sql = "SELECT author, content, created_at FROM comments WHERE post_id=";
+        //TODO comment-box
+        ?>
+        <div class="comment-box">
+            <h3>Autor</h3>
+            <p>Treść komentarza</p>
+            <span class="public">Opublikowano: 2025-05-29 14:47:20</span>
+        </div><div class="comment-box">
+            <h3>Autor</h3>
+            <p>Treść komentarza</p>
+            <span class="public">Opublikowano: 2025-05-29 14:47:20</span>
+        </div>
+
     </div>
 </main>
 <footer>
     <p>&copy; 2025 Adrian Rzeszutek</p>
 </footer>
+<script>
+    function syncContent() {
+        const editable = document.querySelector('.comment');
+        const hidden = document.getElementById('commentHidden');
+        hidden.value = editable.innerText.trim();
+    }
+    document.querySelector('form').addEventListener('submit', syncContent);
+</script>
 </body>
 </html>
