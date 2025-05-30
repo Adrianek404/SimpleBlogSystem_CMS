@@ -23,3 +23,44 @@
         }
     }
 }
+.comments-container{
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    h4 {
+        color: #313030;
+    }
+
+    .comment-box{
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-bottom: 30px;
+
+        .author {
+            max-width: 25%;
+            margin: 10px 0;
+        }
+
+        .comment {
+            max-width: 75%;
+        }
+
+        button {
+            color: white;
+            background-color: #007BFF;
+            border: 2px solid #007BFF;
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 6px 12px;
+            margin: 10px 0;
+            width: 20%;
+            
+        }
+    }
+}
