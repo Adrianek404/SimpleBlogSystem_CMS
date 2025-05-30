@@ -1,0 +1,25 @@
+.post-box {
+
+    p {
+        color: #000; !important;
+    }
+
+    span {
+        float: right;
+        color: #555;
+    }
+
+    button {
+
+        color: white;
+        background-color: #007BFF;
+        border: 2px solid #007BFF;
+        border-radius: 6px;
+        cursor: pointer;
+        padding: 6px 12px;
+
+        a {
+            color: white;
+        }
+    }
+}

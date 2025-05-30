@@ -18,9 +18,14 @@ if (isset($_GET['page'])) {
     } else {
         $page = $_GET['page'];
     }
-    setcookie("STRONA", $page, time() + (86400 * 30), "/");
+    setcookie("page", $page, time() + (86400 * 30), "/");
 } else {
-    $page = 1;
+    if(!isset($_COOKIE["page"])) {
+        $page = 1;
+    } else {
+        $page = $_COOKIE["page"];
+    }
+
 }
 $from = $maxOnPage * ($page - 1);
 
@@ -80,6 +85,8 @@ $from = $maxOnPage * ($page - 1);
 
             if ($prevous > 0) {
                 echo "<a href='index.php?page=$prevous'>&laquo;</a>";
+            } else {
+                echo "<a href='#'>&laquo;</a>";
             }
             for ($i = 1; $i <= $numberPages; $i++) {
                 if ($page == $i) {
@@ -89,9 +96,10 @@ $from = $maxOnPage * ($page - 1);
                 }
                 /* TODO: stworzyć system przewijania paginatora: limit na strone 10, wiec np na stronie 14 wezmie srodek 14 i wezmie 4 dodatkowe liczby na lewo i 5 liczb na prawo aby bylo 10
                     np:
-                    << 2 3 4 5 6 7 8 9 10 11 >>
-                    <<10 11 12 13 14 15 16 17 18 19 >>
+                    << 2 3 4 5 6 7 8 9 10 11 >> -- active 6
+                    <<10 11 12 13 14 15 16 17 18 19 >> active 14
                 w liczbach od 1 do 5 active podaza za strona a powyzej 5 zostaje na srodku i liczby sie zmieniaja na koncu o jedno mniej a drugim o jedno wiecej
+                im blizej konca np ostatnia to 22 liczba to jesli polewej stronie jest mniej niz 5 to active idzie do ostatniej liczby
                   */
                 if ($i == 10){
                     $i = $numberPages;
@@ -101,6 +109,8 @@ $from = $maxOnPage * ($page - 1);
             <?php
             if ($next <= $numberPages) {
                 echo "<a href='index.php?page=$next'>&raquo;</a>";
+            } else {
+                echo "<a href='#'>&raquo;</a>";
             }
         }
         ?>
