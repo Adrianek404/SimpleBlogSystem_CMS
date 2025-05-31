@@ -3,8 +3,6 @@
 global $conn;
 include("./inc/db.php");
 
-//setcookie("STRONA", "1", time() + (86400 * 30), "/");
-
 $maxOnPage = 2;
 $sql = "SELECT COUNT(id) FROM posts;";
 $result = mysqli_query($conn, $sql);

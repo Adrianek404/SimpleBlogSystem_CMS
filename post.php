@@ -27,11 +27,23 @@ $authorErr = $commentErr = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["author"])) {
         $authorErr = "Wpisz pseudonim";
+    } else {
+        $author = $_POST["author"];
     }
     if (empty($_POST['comment'])) {
         $commentErr = "Nie wpisałeś żadnego komentarza";
+    } else {
+        $comment = $_POST["comment"];
     }
-    //TODO: insert
+    $sql = "INSERT INTO comments (post_id, author, content) VALUES ('" . $Postid . "', '" . $author . "', '" . $comment . "')";
+    if ($stmt = mysqli_prepare($conn, $sql)) {
+        if (mysqli_stmt_execute($stmt)) {
+                echo '<script type="text/javascript">
+       window.onload = function () { alert("Poprawnie dodano komentarz!"); } 
+</script>';
+        }
+        mysqli_stmt_close($stmt);
+    }
 }
 
 ?>
@@ -82,18 +94,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="comments-container">
         <?php
-        $sql = "SELECT author, content, created_at FROM comments WHERE post_id=";
-        //TODO comment-box
+        $sql = "SELECT author, content, created_at FROM comments WHERE post_id=" . $Postid;
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+            if (mysqli_stmt_execute($stmt)) {
+                $result = mysqli_stmt_get_result($stmt);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo '<div class="comment-box">
+                                <h3>'. $row["author"] .'</h3>
+                                <p>'. $row["content"] .'</p>
+                                <span class="public">Opublikowano: '. $row["created_at"] .'</span>
+                            </div>';
+                    }
+                }
+            }
+        }
         ?>
-        <div class="comment-box">
-            <h3>Autor</h3>
-            <p>Treść komentarza</p>
-            <span class="public">Opublikowano: 2025-05-29 14:47:20</span>
-        </div><div class="comment-box">
-            <h3>Autor</h3>
-            <p>Treść komentarza</p>
-            <span class="public">Opublikowano: 2025-05-29 14:47:20</span>
-        </div>
 
     </div>
 </main>
