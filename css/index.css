@@ -35,6 +35,10 @@ nav{
     border-radius: 15px;
     cursor: pointer;
     padding: 6px 12px;
+
+    a {
+        color: white;
+    }
 }
 .nav-links{
     display: flex;
