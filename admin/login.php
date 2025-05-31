@@ -1,5 +1,8 @@
 <?php
 
+global $conn;
+include("./inc/db.php");
+
 ?>
 <!doctype html>
 <html lang="pl">
@@ -7,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simple Blog System (CMS) | Logowanie</title>
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
 <nav>
