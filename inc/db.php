@@ -8,10 +8,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sqlFile = "./sql/schema.sql";
-$sql = file_get_contents($sqlFile);
-
-if ($sql === FALSE) {
+if (file_exists("./sql/schema.sql")){
+    $sql = file_get_contents("./sql/schema.sql");
+} else if (file_exists("../sql/schema.sql")){
+    $sql = file_get_contents("../sql/schema.sql");
+} else {
     die("Unable to load SQL file.");
 }
 
