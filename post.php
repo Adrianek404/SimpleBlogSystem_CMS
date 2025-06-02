@@ -24,25 +24,30 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
     header('Location: index.php');
 }
 $authorErr = $commentErr = "";
+$error = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["author"])) {
         $authorErr = "Wpisz pseudonim";
+        $error = true;
     } else {
         $author = $_POST["author"];
     }
     if (empty($_POST['comment'])) {
         $commentErr = "Nie wpisałeś żadnego komentarza";
+        $error = true;
     } else {
         $comment = $_POST["comment"];
     }
-    $sql = "INSERT INTO comments (post_id, author, content) VALUES ('" . $Postid . "', '" . $author . "', '" . $comment . "')";
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-        if (mysqli_stmt_execute($stmt)) {
+    if (!$error) {
+        $sql = "INSERT INTO comments (post_id, author, content) VALUES ('" . $Postid . "', '" . $author . "', '" . $comment . "')";
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+            if (mysqli_stmt_execute($stmt)) {
                 echo '<script type="text/javascript">
        window.onload = function () { alert("Poprawnie dodano komentarz!"); } 
 </script>';
+            }
+            mysqli_stmt_close($stmt);
         }
-        mysqli_stmt_close($stmt);
     }
 }
 
@@ -61,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <nav>
     <div class="logo">
         <span>Nazwa</span>
-        <button class="login-button">ZALOGUJ</button>
+        <button class="login-button"><a href="admin/login.php">ZALOGUJ</a></button>
     </div>
     <div class="nav-links">
         <span>Strona główna</span>
