@@ -128,6 +128,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         hidden.value = editable.innerText.trim();
     }
     document.querySelector('form').addEventListener('submit', syncContent);
+
+    const toast = document.querySelector(".toast");
+    const progress = document.querySelector(".progress");
+    let timer1, timer2;
+    const closeBtn = document.querySelector(".close");
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            toast?.classList.remove("active");
+
+            setTimeout(() => {
+                progress?.classList.remove("active");
+            }, 300);
+
+            clearTimeout(timer1);
+            clearTimeout(timer2);
+        });
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        if (toast && progress) {
+            toast.classList.add("active");
+            progress.classList.add("active");
+
+            timer1 = setTimeout(() => {
+                toast.classList.remove("active");
+            }, 5000);
+
+            timer2 = setTimeout(() => {
+                progress.classList.remove("active");
+            }, 5300);
+        }
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const highlightId = urlParams.get('comment');
+        if (highlightId) {
+            const el = document.getElementById("comment-" + highlightId);
+            if (el) {
+                el.classList.add("highlight");
+                el.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+    });
+
 </script>
 </body>
 </html>
