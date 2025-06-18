@@ -42,9 +42,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO comments (post_id, author, content) VALUES ('" . $Postid . "', '" . $author . "', '" . $comment . "')";
         if ($stmt = mysqli_prepare($conn, $sql)) {
             if (mysqli_stmt_execute($stmt)) {
-                echo '<script type="text/javascript">
-       window.onload = function () { alert("Poprawnie dodano komentarz!"); } 
-</script>';
+                echo '
+                <div class="toast">
+                    <div class="toast-content">
+                         <i class="fas fa-solid fa-check check"></i>
+                        <div class="message">
+                            <span class="text text-1">Sukces</span>
+                            <span class="text text-2">Poprawnie dodano komentarz!</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-xmark close"></i>
+                    <div class="progress"></div>
+                </div>
+                ';
             }
             mysqli_stmt_close($stmt);
         }
