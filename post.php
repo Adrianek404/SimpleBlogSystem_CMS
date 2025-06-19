@@ -23,6 +23,12 @@ if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
 } else {
     header('Location: index.php');
 }
+if (isset($_GET['comment'])){
+    require_once './inc/auth.php';
+    if (!isLoggedIn()){
+        $_GET['comment'] = null;
+    }
+}
 $authorErr = $commentErr = "";
 $error = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
