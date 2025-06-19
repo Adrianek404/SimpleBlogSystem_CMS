@@ -8,6 +8,9 @@ session_start();
 $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $user = trim($_POST['username']);
+    if (!filter_var($user, FILTER_VALIDATE_EMAIL)){
+        $error = "Błędny login";
+    }
     $pswd = trim($_POST['password']);
     if (empty($error)){
         $sql = "SELECT id, username, password FROM users WHERE username = ?";
