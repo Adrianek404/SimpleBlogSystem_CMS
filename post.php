@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = mysqli_stmt_get_result($stmt);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-                        echo '<div class="comment-box">
+                        echo '<div id="comment-' .  $row["id"] .'" class="comment-box">
                                 <h3>'. $row["author"] .'</h3>
                                 <p>'. $row["content"] .'</p>
                                 <span class="public">Opublikowano: '. $row["created_at"] .'</span>
