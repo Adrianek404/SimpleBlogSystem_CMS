@@ -89,5 +89,7 @@
         }
     }
 
-
+.comment-box.highlight {
+    background-color: rgb(65, 65, 206, 0.5);
+    transition: background-color 1s ease;
 }
